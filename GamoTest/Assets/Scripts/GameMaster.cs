@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameMaster : MonoBehaviour
 {
 	public static GameMaster gm;
+
+	public Action gameoverAction;
+
 	public int highScore;
 	public int currentScore;
 
