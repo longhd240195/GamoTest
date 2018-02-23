@@ -22,21 +22,21 @@ public class Pool : MonoBehaviour
 			SpawnObject ();
 		} else
 			DestroyImmediate (this.gameObject);
-		
 	}
 
 	void SpawnObject ()
 	{
-		groundInPool = new List<GameObject> ();
-		barrielInPool = new List<GameObject> ();
+//		groundInPool = new List<GameObject> ();
+//		barrielInPool = new List<GameObject> ();
 		StartCoroutine (SpawnObject (groundObject, numberGround, groundInPool));
 		StartCoroutine (SpawnObject (barrielObject, numberBarriel, barrielInPool));
 	}
 
 	IEnumerator SpawnObject (GameObject obj, int number, List<GameObject> listStore)
 	{
+		Vector3 initPlace = new Vector3 (-100f, -100f, 0);
 		for (int i = 0; i < number; i++) {
-			GameObject newObj = Instantiate (obj, transform);
+			GameObject newObj = Instantiate (obj, initPlace, Quaternion.identity, transform);
 			yield return newObj;
 			listStore.Add (newObj);
 			newObj.SetActive (false);
@@ -46,7 +46,7 @@ public class Pool : MonoBehaviour
 	public GameObject GetGround ()
 	{
 		GameObject g = groundInPool [0];
-		groundInPool.RemoveAt (0);
+		groundInPool.Remove (g);
 		return g;
 	}
 

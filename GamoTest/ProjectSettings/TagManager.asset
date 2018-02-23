@@ -8,6 +8,7 @@ TagManager:
   - JumpSpace
   - GroupBarriel
   - Ground
+  - PnlGameOver
   layers:
   - Default
   - TransparentFX

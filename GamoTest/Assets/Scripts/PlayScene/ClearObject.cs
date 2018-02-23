@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RemoveMap : MonoBehaviour
+public class ClearObject : MonoBehaviour
 {
-	[SerializeField] string groundTag = "Ground";
-	[SerializeField] string barrielTag = "GroupBarriel";
-
 	void OnTriggerEnter2D (Collider2D hit)
 	{
 		GameObject obj = hit.gameObject;
-		if (hit.CompareTag (groundTag)) {
+		if (hit.CompareTag (Constant.groundTag)) {
 			Pool.pool.AddGround (obj);
-		} else if (hit.CompareTag (barrielTag)) {
+		} else if (hit.CompareTag (Constant.groupBarrielTag)) {
 			Pool.pool.AddBarriel (obj);
 		}
 	}

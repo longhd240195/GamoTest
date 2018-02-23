@@ -48,4 +48,9 @@ public class GameMaster : MonoBehaviour
 	{
 		SceneManager.LoadScene (newScene);
 	}
+
+	public void GameOver ()
+	{
+		highScore = highScore < currentScore ? currentScore : highScore;
+	}
 }
