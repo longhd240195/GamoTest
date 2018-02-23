@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 	public static Action<float> speedChange;
 	public static Action<int> scoreChange;
 
-	[SerializeField] Vector3 spwanPoint;
+	[SerializeField] Vector3 startPosition;
 	[SerializeField] GameObject pnlGameOver;
 	[SerializeField] Rigidbody2D _rigid;
 	[SerializeField] Transform _trans;
@@ -16,25 +16,24 @@ public class Player : MonoBehaviour
 	[SerializeField] float baseSpeed = 600f;
 	[SerializeField] float speed;
 	[SerializeField] float speedJump;
-	[SerializeField] float acc = 10f;
+	[SerializeField] float accleration = 10f;
 
 	void Start ()
 	{
-		spwanPoint = transform.position;
 		InitMap ();
 
-		transform.position = spwanPoint;
-		GameMaster.gm.currentScore = 0;
-		speed = baseSpeed;
-		Time.timeScale = 1f;
-		pnlGameOver.SetActive (false);
+		InitGame ();
 		UpdateUI ();
 	}
 
 	void Update ()
 	{
+		// Velocity multiple with delta time to make game more smooth
+		// Velocity in x axis alway const
 		Vector2 velo = _rigid.velocity;
 		velo.x = speed * Time.deltaTime;
+
+		// Add velocity in y axis when space button click
 		if (Input.GetKeyDown (KeyCode.Space) && canJump) {
 			velo.y = speedJump * Time.deltaTime;
 			canJump = false;
@@ -57,7 +56,7 @@ public class Player : MonoBehaviour
 	{
 		if (hit.CompareTag (Constant.jumpSpaceTag)) {
 			GameMaster.gm.currentScore += 10;
-			speed += acc;
+			speed += accleration;
 			UpdateUI ();
 		}
 	}
@@ -82,12 +81,17 @@ public class Player : MonoBehaviour
 		ClearMap ();
 		InitMap ();
 
-		transform.position = spwanPoint;
+		InitGame ();
+		UpdateUI ();
+	}
+
+	void InitGame ()
+	{
+		transform.position = startPosition;
 		GameMaster.gm.currentScore = 0;
 		speed = baseSpeed;
 		Time.timeScale = 1f;
 		pnlGameOver.SetActive (false);
-		UpdateUI ();
 	}
 
 	void InitMap ()
